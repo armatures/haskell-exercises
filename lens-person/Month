@@ -1,0 +1,11 @@
+Data.Time.Calendar.Easter sundayAfter :: Day -> Day
+Hledger.Data.Dates prevday :: Day -> Day
+Hledger.Data.Period mondayBefore :: Day -> Day
+Data.Time.Calendar.Easter.Compat sundayAfter :: Day -> Day
+Data.Functor.Contravariant.Day diag :: f a -> Day f f a
+Data.Time.Calendar ModifiedJulianDay :: Integer -> Day
+Data.Time.Calendar.Easter orthodoxPaschalMoon :: Integer -> Day
+Data.Time.Calendar.Easter orthodoxEaster :: Integer -> Day
+Data.Time.Calendar.Easter gregorianPaschalMoon :: Integer -> Day
+Data.Time.Calendar.Easter gregorianEaster :: Integer -> Day
+-- plus more results not shown, pass --count=20 to see more
