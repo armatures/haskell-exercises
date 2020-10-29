@@ -2,7 +2,7 @@ module DNA (toRNA) where
 import Data.List
 
 toRNA :: String -> Either Char String
-toRNA xs =
+toRNA =
   let
   help char =
    case char of
@@ -12,6 +12,6 @@ toRNA xs =
      'T' -> Right 'A'
      otherwise -> Left char
   in
-  mapM help xs
+  mapM help
 
 
