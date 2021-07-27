@@ -1,3 +1,4 @@
+{-# LANGUAGE RankNTypes #-}
 module ListOps
   ( length
   , reverse
@@ -9,8 +10,8 @@ module ListOps
   , concat
   ) where
 
-import Prelude hiding
-  ( length, reverse, map, filter, foldr, (++), concat )
+import           Prelude hiding (concat, filter, foldr, length, map, reverse,
+                          (++))
 
 foldl' :: (b -> a -> b) -> b -> [a] -> b
 foldl' _ z [] = z
@@ -18,32 +19,25 @@ foldl' f z (x:xs) = let z' = f z x in
   z' `seq` foldl' f z' xs
 
 foldr :: (a -> b -> b) -> b -> [a] -> b
-foldr f z [] = z
-foldr f z xs = foldr f (f (last xs) z) (init xs)
+foldr k z = go
+          where
+            go []     = z
+            go (y:ys) = y `k` go ys
 
 length :: [a] -> Int
-length xs = foldl' (\l _ -> l + 1) 0 xs
+length = foldl' (\l _ -> l + 1) 0
 
 reverse :: [a] -> [a]
-reverse xs = foldl (flip (:)) [] xs
+reverse = foldl (flip (:)) []
 
 map :: (a -> b) -> [a] -> [b]
-map f xs = foldr ((:) . f) [] xs
+map f = foldr ((:) . f) []
 
-filter :: (a -> Bool) -> [a] -> [a]
-filter p xs =
-  let
-    -- h :: a -> [a] -> [a]
-    h y ys = if p y then
-              y:ys
-            else
-              ys
-  in
-    foldr h [] xs
+filter :: forall a. (a -> Bool) -> [a] -> [a]
+filter p = foldr (\y acc -> if p y then y:acc else acc) []
 
 (++) :: [a] -> [a] -> [a]
-[] ++ ys = ys
-xs ++ ys = (init xs) ++ ((last xs) : ys)
+xs ++ ys = foldr (:) ys xs
 
 concat :: [[a]] -> [a]
 concat = foldr (++) []

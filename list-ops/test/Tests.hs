@@ -33,7 +33,7 @@ main = hspecWith defaultConfig {configFastFail = True} specs
 specs :: Spec
 specs = do
 
-    let big = 1000 :: Int
+    let big = 100000 :: Int
 
     describe "length" $ do
       it "of empty list" $
@@ -79,7 +79,7 @@ specs = do
         foldl' (flip (:)) [] "asdf" `shouldBe` "fdsa"
       -- Track-specific test
       it "is accumulator-strict (use seq or BangPatterns)" $
-        evaluate (foldl' (flip const) () [throw StrictException, ()])
+        evaluate (foldl' (const id) () [throw StrictException, ()])
         `shouldThrow` (== StrictException)
 
     describe "foldr" $ do
@@ -119,3 +119,5 @@ specs = do
       -- Track-specific test
       it "of large list of small lists" $
         concat (map (:[]) [1 .. big]) `shouldBe` [1 .. big]
+
+-- 51d6e908fdf1165cc9a7de7846d704b17dfd5e40

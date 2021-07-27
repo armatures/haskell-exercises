@@ -1,11 +1,11 @@
-name: list-ops
-version: 2.4.0.9
+name: isogram
+version: 1.7.0.8
 
 dependencies:
   - base
 
 library:
-  exposed-modules: ListOps
+  exposed-modules: Isogram
   source-dirs: src
   ghc-options: -Wall
   # dependencies:
@@ -17,5 +17,5 @@ tests:
     main: Tests.hs
     source-dirs: test
     dependencies:
-      - list-ops
+      - isogram
       - hspec
